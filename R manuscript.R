@@ -1050,22 +1050,42 @@ sub_str
 
 substr(stringd,start = 2,stop = 4) <- 'aaa'#替换第二位到第四位字母为aaa
 
-
+####
 seq_names <- c('EU_FRA02_C1_S2008','AF_COM12_B0_2004','AF_COM17_F0_S2008',
                'AS_CHN11_C3_2004','EU-FRA-C3-S2007','NAUSA02E02005',
                'AS_CHN12_N0_05','NA_USA03_C2_S2007','NA_USA04_A3_2004',
                'EU_UK01_A0_2009','eu_fra_a2_s98',"SA/BRA08/B0/1996")
 
-fra_seq <- grep(pattern = 'FRA|fra',x = seq_names,value = T)#value=T时返回的是值，否则返回的是index
-
+#寻找含fra或FRA的字符串
+fra_seq <- grep(pattern = 'FRA|fra',x = seq_names,value = T)
+#value=T时返回的是值，否则返回的是index
 fra_seq
 
+#寻找含fra或FRA的字符串
+grepl(pattern = 'FRA',x = seq_names,ignore.case = T)#ignore参数忽视大小写
+
+grepl(pattern = '[s|S][0-9]{2,4}\\b',seq_names)
+#pattern利用正则表达式
+#[s|S]选择大写或是小写s，[0-9]代表选择一个数字，{2，4}代表选择两次或四次，b是指匹配边界
+spe_seq <- seq_names[!grepl(pattern = '[s|S][0-9]{2,4}\\b',seq_names)]
+spe_seq
+
+
+my_string <- c('above','about','abortion','cab')
+grep('\\bab',my_string,value = T)#寻找以ab开头的单词
 
 
 
 
+#示例Money
+money <- c('$1888','$2888','$3888')
 
+as.numeric(money)#不能直接转为数值型，因为有美元符
 
+gsub('\\$',replacement = '',money)#正则表达式中美元符本身有意义，使用转义符\\使之仅作为符号
+
+money <- c('$1888 $2888 $3888')
+sub('\\$',replacement = '',money)#只替换每个元素的第一个匹配字符
 
 
 
